@@ -1,0 +1,231 @@
+/* ===== Base Hacker Theme and Global Styles ===== */
+body {
+    background: #0d0f12;
+    font-family: "Courier New", monospace;
+    color: #00ffcc;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Ensures padding and borders don't add to the width/height of elements */
+* {
+    box-sizing: border-box;
+}
+
+/* Headings */
+h2 {
+    color: #00ffcc;
+    text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffaa;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Inputs */
+input {
+    background: #111;
+    border: 1px solid #00ffaa;
+    color: #00ffcc;
+    padding: 8px 12px;
+    border-radius: 6px;
+    outline: none;
+    /* Removed margin-right for mobile to allow full width */
+    width: 100%; /* Makes input fields fill the available space */
+}
+
+input::placeholder {
+    color: #00ffaa;
+}
+
+/* Buttons (General) */
+button {
+    font-family: "Courier New", monospace;
+    border: none;
+    cursor: pointer;
+    transition: 0.25s ease-in-out;
+    font-weight: bold;
+    width: 100%; /* Makes buttons full-width on mobile */
+}
+
+/* Primary Button */
+button.predict-btn {
+    background: #0099ff;
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 12px rgba(0, 153, 255, 0.4);
+}
+
+button.predict-btn:hover {
+    background: #00ccff;
+    box-shadow: 0 0 20px #00ccff;
+    transform: scale(1.05);
+}
+
+/* Add Button */
+button.add-btn {
+    background: #00ff99;
+    color: #111;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 12px rgba(0, 255, 153, 0.4);
+}
+
+button.add-btn:hover {
+    background: #00cc77;
+    box-shadow: 0 0 20px #00cc77;
+    transform: scale(1.05);
+}
+
+/* ===== Layout Containers ===== */
+#input-group,
+#controls,
+.prediction-container {
+    display: flex;
+    flex-direction: column; /* Stacks elements vertically on mobile */
+    align-items: center;
+    gap: 15px; /* Consistent spacing between all items */
+    width: 100%; /* Takes up full width of the body's padding */
+    max-width: 500px; /* Limits the container's width on larger screens */
+    margin: 0 auto 20px auto; /* Centers the container and provides bottom margin */
+}
+
+/* Prediction Box */
+#prediction-box-container {
+    display: none;
+    width: 100%;
+    max-width: 400px; /* Set a max-width for the container */
+    margin: 0 auto 20px auto;
+}
+
+#prediction-box {
+    background: rgba(10, 20, 30, 0.9);
+    border: 2px solid #00ffcc;
+    border-radius: 16px;
+    padding: 20px;
+    font-family: "Courier New", monospace;
+    color: #00ffcc;
+    box-shadow: 0 0 20px #00ffcc, inset 0 0 15px rgba(0, 255, 204, 0.1);
+    text-align: center;
+    animation: neonPulse 2.5s infinite alternate;
+    width: 100%; /* Makes it full-width within its container */
+}
+
+.result-line {
+    margin-bottom: 5px;
+}
+
+/* Copy Button */
+.copy-btn {
+    background: linear-gradient(145deg, #ffd633, #ffcc00);
+    border: none;
+    color: #111;
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding: 15px 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), inset 0 -3px 6px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+    width: 100%; /* Makes button full-width */
+}
+
+.copy-btn:hover {
+    background: linear-gradient(145deg, #ffcc00, #ffb300);
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6), inset 0 -3px 6px rgba(0, 0, 0, 0.25);
+}
+
+.copy-btn:active {
+    transform: scale(0.97);
+}
+
+/* Prediction Value */
+.prediction-value {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #39ff14;
+    text-shadow: 0 0 12px #39ff14;
+}
+
+/* Neon Pulse Animation */
+@keyframes neonPulse {
+    from {
+        box-shadow: 0 0 12px #00ffcc, inset 0 0 10px rgba(0, 255, 204, 0.2);
+    }
+    to {
+        box-shadow: 0 0 24px #00ffaa, inset 0 0 15px rgba(0, 255, 204, 0.3);
+    }
+}
+
+/* Table Container */
+.table-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 30px auto 0 auto;
+    overflow-x: auto; /* Ensures horizontal scrolling for table on small screens */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #00ffaa;
+    white-space: nowrap; /* Prevents text from wrapping in table cells */
+}
+
+table th,
+table td {
+    border: 1px solid #00ffaa;
+    padding: 8px; /* Reduced padding for smaller screens */
+    text-align: center;
+}
+
+table th {
+    background: #111;
+    text-shadow: 0 0 6px #00ffcc;
+}
+
+/* Glowing Red and Green Text */
+.red {
+    color: #ff0000;
+    text-shadow: 0 0 2px #ff4d4d, 0 0 5px #ff0000;
+    font-weight: bold;
+}
+
+.green {
+    color: #22ff00;
+    text-shadow: 0 0 2px #39ff14, 0 0 5px #00ff00;
+    font-weight: bold;
+}
+
+/* --- Media Query for Larger Screens (e.g., tablets and desktops) --- */
+@media (min-width: 769px) {
+    /* Change flex direction to a row for a horizontal layout */
+    #input-group,
+    #controls {
+        flex-direction: row;
+        justify-content: center; /* Centers items horizontally */
+    }
+
+    #input-group input {
+        width: auto;
+        flex-grow: 1; /* Allows inputs to grow and fill space */
+    }
+
+    button.add-btn,
+    button.predict-btn {
+        width: auto; /* Removes full-width constraint */
+    }
+
+    #input-group input {
+        margin-right: 8px; /* Re-adds the original margin */
+    }
+
+    .copy-btn,
+    #prediction-box {
+        width: auto; /* Removes the width constraint */
+        min-width: 220px; /* Re-applies min-width */
+    }
+}

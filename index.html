@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Smart Number Predictor</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <h2>Enter Numbers (Auto Spaced)</h2>
+
+        <div id="input-group">
+            <input
+                type="number"
+                id="periodInput"
+                placeholder="Enter starting period"
+            />
+            <input
+                type="text"
+                id="numInput"
+                placeholder="e.g. 2378"
+                maxlength="39"
+            />
+            <button class="add-btn" onclick="addNumbers()">Add</button>
+        </div>
+
+        <div id="controls">
+            <button class="predict-btn" onclick="predict('sequence')">
+                Sequence Logic
+            </button>
+            <button class="predict-btn" onclick="predict('majority')">
+                Majority Logic
+            </button>
+            <button class="predict-btn" onclick="predict('alternate')">
+                Alternate Logic
+            </button>
+            <div id="result"></div>
+        </div>
+
+        <div id="prediction-box-container" style="display: none">
+            <div class="prediction-container">
+                <div id="prediction-box">
+                    <div class="result-line">🎯 WIN-GO : 1 Min WinGo</div>
+                    <div class="result-line">
+                        ⏳ PERIOD : <span id="predicted-period"></span>
+                    </div>
+                    <div class="result-line">
+                        🔮 PREDICTION : <span id="predicted-value"></span>
+                    </div>
+                </div>
+                <button
+                    class="copy-btn"
+                    id="copy-btn"
+                    onclick="copyPrediction()"
+                >
+                    Copy
+                </button>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Period #</th>
+                        <th>Number</th>
+                        <th>Color</th>
+                        <th>Size</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+
+        <script src="script.js"></script>
+    </body>
+</html>
