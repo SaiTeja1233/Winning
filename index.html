@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Smart Number Predictor</title>
         <link rel="stylesheet" href="styles.css" />
     </head>
@@ -43,11 +44,11 @@
                 </div>
                 <div class="copy-btn-container">
                     <div>
-                        <button id="copyLinkBtn" class="copy-btn">
+                        <button id="copyLinkBtn" class="copy-btn" onclick="copyPrediction()">
                             <span>
                                 <svg
-                                    width="30"
-                                    height="30"
+                                    width="20"
+                                    height="20"
                                     fill="#00ff99"
                                     xmlns="http://www.w3.org/2000/svg"
                                     shape-rendering="geometricPrecision"
@@ -75,7 +76,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Period #</th>
+                        <th>Period</th>
                         <th>Number</th>
                         <th>Color</th>
                         <th>Size</th>

@@ -10,7 +10,6 @@ body {
     background: #0d1117;
     color: #00ff99;
     min-height: 100vh;
-    padding: 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -32,18 +31,18 @@ h2 {
     gap: 15px;
     margin-bottom: 25px;
     justify-content: center;
-    width: 100%;
+    width: 80%;
 }
 
 #input-group input {
     margin-top: 5%;
-    padding: 24px;
+    padding: 20px;
     border: 2px solid #00ff99;
     border-radius: 10px;
     outline: none;
     background: #0b0f14;
     color: #00ff99;
-    font-size: 2.5rem;
+    font-size: 2rem;
     width: 60%;
     transition: all 0.3s ease;
 }
@@ -60,7 +59,7 @@ h2 {
     border: none;
     border-radius: 10px;
     padding: 18px 32px;
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s;
@@ -88,13 +87,13 @@ h2 {
     bottom: 100px;
     border: 2px solid #00ff99;
     border-radius: 10px;
-    padding: 40px 20px;
-    font-size: 2.5rem;
+    padding: 30px 15px;
+    font-size: 2rem;
     color: #00ff99;
     cursor: pointer;
     transition: all 0.3s ease;
     font-weight: bold;
-    background-color:#00ff995c;
+    background-color: #00ff995c;
 }
 
 .predict-btn:hover {
@@ -107,7 +106,7 @@ h2 {
     flex-basis: 100%;
     margin-top: 15px;
     text-align: center;
-    font-size: 2rem;
+    font-size: 1.6rem;
     color: #00ffaa;
     text-shadow: 0 0 8px #00ff99;
 }
@@ -123,9 +122,10 @@ h2 {
     background: rgba(10, 15, 20, 0.95);
     border: 2px solid #00ff99;
     border-radius: 14px;
-    padding: 40px;
+    padding: 25px;
     margin-bottom: 25px;
-    width: 100%;
+    width: 80%;
+    max-width: 700px;
     text-align: center;
     box-shadow: 0 0 20px rgba(0, 255, 153, 0.5);
     display: flex;
@@ -135,89 +135,94 @@ h2 {
 }
 
 #prediction-box .result-line {
-    margin: 10px 0;
-    font-size: 2.5rem;
+    margin: 8px 0;
+    font-size: 2rem;
 }
 
 .copy-btn-container {
-    width: 50px;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
 }
 
 .copy-btn {
     background-color: #0b0f14;
-    width: 250px;
-    height: 60px;
+    width: 220px;
+    height: 55px;
     border: 2px solid #00ff99;
     border-radius: 10px;
     font-weight: 600;
     cursor: pointer;
-    font-size: 2rem;
+    font-size: 1.8rem;
     overflow: hidden;
     transition-duration: 700ms;
-    color: #00ff99; /* Initial text color */
+    color: #00ff99;
+    position: relative;
 }
 
+/* Base styles for the "Copy" text and SVG */
 .copy-btn span:first-child {
     color: #00ff99;
     position: absolute;
     transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
 }
 
+/* Base styles for the "Copied!!" text */
 .copy-btn span:last-child {
     position: absolute;
     color: #00ff99;
     opacity: 0;
     transform: translateY(100%) translateX(-50%);
-    height: 14px;
-    line-height: 13px;
+    top: 50%;
+    left: 50%;
 }
 
+/* Focus state for the button */
 .copy-btn:focus {
     background-color: #00ff99;
-    color: #0d1117; /* Text color on focus */
-   width: 250px;
-    height: 60px;
-    transition-delay: 100ms;
+    color: #0d1117;
     transition-duration: 500ms;
 }
 
 .copy-btn:focus span:first-child {
-    color: #0d1117; /* Text color when fading out */
+    color: #0d1117;
     transform: translateX(-50%) translateY(-150%);
     opacity: 0;
     transition-duration: 500ms;
 }
 
 .copy-btn:focus span:last-child {
-    color: #0d1117; /* "Copied" text color on focus */
+    color: #0d1117;
     transform: translateX(-50%) translateY(-50%);
     opacity: 1;
     transition-delay: 300ms;
     transition-duration: 500ms;
 }
 
-.copy-btn:focus:end {
-    background-color: #00ff99;
-   width: 250px;
-    height: 60px;
-    transition-duration: 900ms;
-}
+
 /* ========== TABLE ========== */
 .table-container {
     width: 100%;
+    max-width: 100%;
     overflow-x: auto;
     margin-top: 20px;
+    display: flex;
+    justify-content: center;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
     min-width: 350px;
+    max-width: 1200px; /* keep table within screen */
     font-size: 1rem;
+    background: #0b0f14;
+    border: 2px solid #00ff99;
+    border-radius: 12px;
+  
 }
 
 thead {
@@ -227,16 +232,21 @@ thead {
 
 thead th {
     padding: 12px;
-    font-size: 2rem;
+    font-size: 1.6rem;
     border-bottom: 2px solid #00ff99;
+    text-align: center;
 }
 
 tbody td {
-    padding: 12px;
+    padding: 80px;
     text-align: center;
     border-bottom: 1px solid #003322;
-    font-size: 4rem;
+    font-size: 2rem;
     color: #e5ffe5;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
 }
 
 tbody td:first-child {
@@ -257,7 +267,6 @@ tbody td:first-child {
     color: purple !important;
 }
 
-/* New class for a specific element */
 td.green-text {
     color: green !important;
 }
@@ -268,4 +277,140 @@ td.red-text {
 
 td.purple-text {
     color: purple !important;
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+@media (max-width: 1024px) {
+    h2 {
+        font-size: 2.5rem;
+    }
+
+    #input-group input {
+        font-size: 1.8rem;
+        width: 70%;
+    }
+
+    .add-btn {
+        font-size: 1.6rem;
+        padding: 15px 25px;
+    }
+
+    .predict-btn {
+        font-size: 2rem;
+        padding: 25px 15px;
+    }
+
+    tbody td {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    h2 {
+        font-size: 2rem;
+    }
+
+    #input-group input {
+        font-size: 1.5rem;
+        width: 90%;
+    }
+
+    .add-btn {
+        font-size: 1.4rem;
+        padding: 12px 20px;
+    }
+
+    .predict-btn {
+        font-size: 1.6rem;
+        padding: 20px 10px;
+        bottom: 80px;
+    }
+
+    .prediction-container {
+        padding: 10px;
+    }
+
+    #prediction-box .result-line {
+        font-size: 1.6rem;
+    }
+
+     .copy-btn {
+        width: 180px; /* Adjust button width for mobile */
+        height: 50px; /* Adjust button height for mobile */
+        font-size: 1.2rem; /* Reduce font size */
+        display: flex; /* Use flexbox for horizontal alignment */
+        align-items: center;
+        justify-content: center;
+        gap: 8px; /* Add space between the icon and text */
+        margin-bottom: 4%;
+    }
+
+    .copy-btn span:first-child {
+        position: static; /* Remove absolute positioning */
+        transform: none; /* Remove transformations */
+        top: auto;
+        left: auto;
+        display: flex; /* Make the first span a flex container to align the SVG and text */
+        align-items: center;
+        gap: 8px; /* Add space between icon and text */
+    }
+
+    .copy-btn span:last-child {
+        position: absolute; /* Keep absolute positioning for the "Copied!!" span */
+        transform: translateY(100%) translateX(-50%);
+        top: 50%;
+        left: 50%;
+    }
+
+    tbody td {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    h2 {
+        font-size: 1.6rem;
+    }
+
+    #input-group {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #input-group input {
+        width: 100%;
+        font-size: 1.2rem;
+        padding: 14px;
+    }
+
+    .add-btn {
+        width: 100%;
+        font-size: 1.2rem;
+        padding: 12px;
+    }
+
+    .predict-btn {
+        font-size: 1.2rem;
+        padding: 15px 10px;
+        bottom: 60px;
+    }
+
+    #prediction-box .result-line {
+        font-size: 1rem;
+    }
+
+    .copy-btn {
+        font-size: 1.2rem;
+        width: 150px;
+        height: 45px;
+    }
+
+    thead th {
+        font-size: 0.9rem;
+    }
+
+    tbody td {
+        font-size: 1rem;
+        padding: 2px;
+    }
 }
