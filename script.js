@@ -4,15 +4,15 @@ const numInput = document.getElementById("numInput");
 const periodInput = document.getElementById("periodInput");
 const tableBody = document.getElementById("tableBody");
 const resultEl = document.getElementById("result");
-// Re-added variables for prediction box
 const predictionBoxContainer = document.getElementById(
     "prediction-box-container"
 );
 const predictedPeriodEl = document.getElementById("predicted-period");
 const predictedValueEl = document.getElementById("predicted-value");
+const addBtn = document.querySelector(".add-btn");
 
 // Event Listeners
-document.querySelector(".add-btn").addEventListener("click", addNumbers);
+addBtn.addEventListener("click", addNumbers);
 
 // Initial setup
 checkPeriodInputVisibility();
@@ -32,8 +32,8 @@ function checkPeriodInputVisibility() {
         numInput.placeholder = "e.g. 2378";
     } else {
         periodInput.style.display = "none";
-        const nextPeriod = numbers[0].periodNumber + 1;
-        numInput.placeholder = `Next Period: ${nextPeriod}`;
+        const nextPeriod = numbers.length > 0 ? numbers[0].periodNumber + 1 : 1;
+        numInput.placeholder = `Next Period:Result num`;
     }
 }
 
@@ -71,7 +71,6 @@ function addNumbers() {
 
     numInput.value = "";
     updateTable();
-    // Hide prediction box when new numbers are added
     predictionBoxContainer.style.display = "none";
     checkPeriodInputVisibility();
 }
@@ -82,14 +81,26 @@ function updateTable() {
         const num = entry.value;
         const row = document.createElement("tr");
 
-        const colorClass = num % 2 === 0 ? "red" : "green";
-        const colorText = num % 2 === 0 ? "Red" : "Green";
+        let colorText, numColorClass;
+        if (num === 0 || num === 5) {
+            colorText = "Purple";
+            numColorClass = "purple-text";
+        } else if (num % 2 === 0) {
+            colorText = "Red";
+            numColorClass = "red-text";
+        } else {
+            colorText = "Green";
+            numColorClass = "green-text";
+        }
+
         const sizeText = num <= 4 ? "SMALL" : "BIG";
 
         row.innerHTML = `
             <td>${entry.periodNumber}</td>
-            <td class="${colorClass}" onclick="editNumber(${entry.periodNumber})">${num}</td>
-            <td><span class="${colorClass}">${colorText}</span></td>
+            <td class="${numColorClass}" onclick="editNumber(${
+            entry.periodNumber
+        })">${num}</td>
+            <td><span class="${colorText.toLowerCase()}">${colorText}</span></td>
             <td>${sizeText}</td>
         `;
         tableBody.appendChild(row);
@@ -105,7 +116,6 @@ function editNumber(periodNumber) {
     if (!isNaN(n) && n >= 0 && n <= 9) {
         entry.value = n;
         updateTable();
-        // Hide prediction box after editing a number
         predictionBoxContainer.style.display = "none";
     } else {
         alert("Invalid number.");
@@ -126,48 +136,68 @@ function getNextPattern(seq) {
     return null;
 }
 
-function getMajority(arr) {
-    let count = { R: 0, G: 0, S: 0, B: 0 };
-    arr.forEach((v) => count[v]++);
-    let majority = Object.entries(count).reduce((a, b) =>
-        a[1] > b[1] ? a : b
-    );
-    return majority[1] > 0 ? majority[0] : null;
+function getWeightedMajority(arr) {
+    if (arr.length === 0) return null;
+    const weightedCounts = {};
+    arr.forEach((item, index) => {
+        const weight = 10 - index;
+        weightedCounts[item] = (weightedCounts[item] || 0) + weight;
+    });
+
+    const sorted = Object.entries(weightedCounts).sort((a, b) => b[1] - a[1]);
+    return sorted[0][0];
 }
 
-function getAlternateNext(seq) {
-    if (seq.length < 2) return null;
-    const last = seq[0];
-    const secondLast = seq[1];
-    return last !== secondLast ? secondLast : null;
-}
-
-function predict(type) {
+function smartPredict() {
     if (numbers.length < 20) {
         resultEl.textContent = "Enter at least 20 numbers to get a prediction.";
-        predictionBoxContainer.style.display = "none"; // Hide prediction box
+        predictionBoxContainer.style.display = "none";
         return;
     }
 
     resultEl.textContent = "Analyzing...";
     resultEl.classList.add("loading");
-    predictionBoxContainer.style.display = "none"; // Hide prediction box during analysis
+    predictionBoxContainer.style.display = "none";
 
     setTimeout(() => {
         let prediction = null;
         let logicUsed = "";
-        const values = numbers.map((e) => e.value);
-        const colors = values.map((n) => (n % 2 === 0 ? "R" : "G"));
+
+        const recentEntries = numbers.slice(0, 10);
+        const values = recentEntries.map((e) => e.value);
+
+        const colors = values.map((n) => {
+            if (n === 0 || n === 5) return "P";
+            return n % 2 === 0 ? "G" : "R";
+        });
+
         const sizes = values.map((n) => (n <= 4 ? "S" : "B"));
 
-        if (type === "sequence") {
-            prediction = getNextPattern(colors) || getNextPattern(sizes);
+        // Step 1: Try Sequence Logic
+        prediction = getNextPattern(colors) || getNextPattern(sizes);
+        if (prediction) {
             logicUsed = "Sequence Logic";
-        } else if (type === "majority") {
-            prediction = getMajority(colors) || getMajority(sizes);
-            logicUsed = "Majority Logic";
-        } else if (type === "alternate") {
-            prediction = getAlternateNext(colors) || getAlternateNext(sizes);
+        }
+
+        // Step 2: Fallback to Majority Logic if no pattern found
+        if (!prediction) {
+            const dominantColor = getWeightedMajority(colors);
+            const dominantSize = getWeightedMajority(sizes);
+
+            // Prioritize color prediction
+            prediction = dominantColor;
+            logicUsed = "Weighted Majority Logic (Color)";
+
+            // Fallback to size if no color prediction
+            if (prediction === null) {
+                prediction = dominantSize;
+                logicUsed = "Weighted Majority Logic (Size)";
+            }
+        }
+
+        // Step 3: Final fallback to Alternate Logic
+        if (!prediction && colors.length > 1) {
+            prediction = colors[1];
             logicUsed = "Alternate Logic";
         }
 
@@ -177,13 +207,15 @@ function predict(type) {
             let predictionText = "";
             let predictionClass = "";
 
-            const isRedOrGreen =
-                typeof prediction === "string" &&
-                (prediction === "R" || prediction === "G");
-
-            if (isRedOrGreen) {
-                predictionText = prediction === "R" ? "Red" : "Green";
-                predictionClass = prediction === "R" ? "red" : "green";
+            if (prediction === "R") {
+                predictionText = "Red";
+                predictionClass = "red";
+            } else if (prediction === "G") {
+                predictionText = "Green";
+                predictionClass = "green";
+            } else if (prediction === "P") {
+                predictionText = "Purple";
+                predictionClass = "purple";
             } else {
                 predictionText = prediction === "S" ? "SMALL" : "BIG";
             }
@@ -194,7 +226,7 @@ function predict(type) {
             updatePredictionBox(nextPeriod, predictionText, predictionClass);
         } else {
             predictionBoxContainer.style.display = "none";
-            resultEl.textContent = `${logicUsed} → No clear prediction.`;
+            resultEl.textContent = `No clear prediction found.`;
         }
     }, 1000);
 }
@@ -203,7 +235,7 @@ function updatePredictionBox(period, predictionText, predictionClass = "") {
     predictedPeriodEl.textContent = period;
     predictedValueEl.textContent = predictionText;
 
-    predictedValueEl.classList.remove("red", "green");
+    predictedValueEl.classList.remove("red", "green", "purple");
     if (predictionClass) {
         predictedValueEl.classList.add(predictionClass);
     }
@@ -216,7 +248,7 @@ function copyPrediction() {
     const predictionValue = predictedValueEl.textContent;
 
     const formattedText = `╭⚬──────────────⚬╮
-│ ⭐⭐ 51 GAMES ⭐⭐
+│ ⭐⭐ 1 MinWinGo ⭐⭐
 │⚬───────────────⚬
 │🎯WINGO : 1MinWinGo
 │⏳PERIOD : ${period}

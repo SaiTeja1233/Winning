@@ -1,231 +1,271 @@
-/* ===== Base Hacker Theme and Global Styles ===== */
-body {
-    background: #0d0f12;
-    font-family: "Courier New", monospace;
-    color: #00ffcc;
+/* ========== BASE (Hacker Theme) ========== */
+* {
     margin: 0;
-    padding: 20px;
-    text-align: center;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Courier New", monospace;
 }
 
-/* Ensures padding and borders don't add to the width/height of elements */
-* {
-    box-sizing: border-box;
+body {
+    background: #0d1117;
+    color: #00ff99;
+    min-height: 100vh;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Headings */
 h2 {
-    color: #00ffcc;
-    text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffaa;
-    font-weight: bold;
+    font-size: 3rem;
     margin-bottom: 20px;
-}
-
-/* Inputs */
-input {
-    background: #111;
-    border: 1px solid #00ffaa;
-    color: #00ffcc;
-    padding: 8px 12px;
-    border-radius: 6px;
-    outline: none;
-    /* Removed margin-right for mobile to allow full width */
-    width: 100%; /* Makes input fields fill the available space */
-}
-
-input::placeholder {
-    color: #00ffaa;
-}
-
-/* Buttons (General) */
-button {
-    font-family: "Courier New", monospace;
-    border: none;
-    cursor: pointer;
-    transition: 0.25s ease-in-out;
-    font-weight: bold;
-    width: 100%; /* Makes buttons full-width on mobile */
-}
-
-/* Primary Button */
-button.predict-btn {
-    background: #0099ff;
-    color: #fff;
-    padding: 12px 25px;
-    border-radius: 10px;
-    font-size: 1.1rem;
-    box-shadow: 0 4px 12px rgba(0, 153, 255, 0.4);
-}
-
-button.predict-btn:hover {
-    background: #00ccff;
-    box-shadow: 0 0 20px #00ccff;
-    transform: scale(1.05);
-}
-
-/* Add Button */
-button.add-btn {
-    background: #00ff99;
-    color: #111;
-    padding: 12px 25px;
-    border-radius: 10px;
-    font-size: 1.1rem;
-    box-shadow: 0 4px 12px rgba(0, 255, 153, 0.4);
-}
-
-button.add-btn:hover {
-    background: #00cc77;
-    box-shadow: 0 0 20px #00cc77;
-    transform: scale(1.05);
-}
-
-/* ===== Layout Containers ===== */
-#input-group,
-#controls,
-.prediction-container {
-    display: flex;
-    flex-direction: column; /* Stacks elements vertically on mobile */
-    align-items: center;
-    gap: 15px; /* Consistent spacing between all items */
-    width: 100%; /* Takes up full width of the body's padding */
-    max-width: 500px; /* Limits the container's width on larger screens */
-    margin: 0 auto 20px auto; /* Centers the container and provides bottom margin */
-}
-
-/* Prediction Box */
-#prediction-box-container {
-    display: none;
-    width: 100%;
-    max-width: 400px; /* Set a max-width for the container */
-    margin: 0 auto 20px auto;
-}
-
-#prediction-box {
-    background: rgba(10, 20, 30, 0.9);
-    border: 2px solid #00ffcc;
-    border-radius: 16px;
-    padding: 20px;
-    font-family: "Courier New", monospace;
-    color: #00ffcc;
-    box-shadow: 0 0 20px #00ffcc, inset 0 0 15px rgba(0, 255, 204, 0.1);
+    color: #00ff99;
+    text-shadow: 0 0 15px #00ff99;
     text-align: center;
-    animation: neonPulse 2.5s infinite alternate;
-    width: 100%; /* Makes it full-width within its container */
 }
 
-.result-line {
-    margin-bottom: 5px;
+/* ========== INPUT SECTION ========== */
+#input-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+    justify-content: center;
+    width: 100%;
 }
 
-/* Copy Button */
-.copy-btn {
-    background: linear-gradient(145deg, #ffd633, #ffcc00);
+#input-group input {
+    margin-top: 5%;
+    padding: 24px;
+    border: 2px solid #00ff99;
+    border-radius: 10px;
+    outline: none;
+    background: #0b0f14;
+    color: #00ff99;
+    font-size: 2.5rem;
+    width: 60%;
+    transition: all 0.3s ease;
+}
+
+#input-group input:focus {
+    box-shadow: 0 0 12px #00ff99;
+    border-color: #00ffcc;
+}
+
+.add-btn {
+    background: #00ff99;
+    margin-top: 5%;
+    color: #0d1117;
     border: none;
-    color: #111;
+    border-radius: 10px;
+    padding: 18px 32px;
+    font-size: 2rem;
     font-weight: bold;
-    font-size: 1.1rem;
-    padding: 15px 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), inset 0 -3px 6px rgba(0, 0, 0, 0.2);
     cursor: pointer;
-    transition: all 0.25s ease-in-out;
-    width: 100%; /* Makes button full-width */
+    transition: all 0.3s;
 }
 
-.copy-btn:hover {
-    background: linear-gradient(145deg, #ffcc00, #ffb300);
-    transform: scale(1.05);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6), inset 0 -3px 6px rgba(0, 0, 0, 0.25);
+.add-btn:hover {
+    background: #0d1117;
+    color: #00ff99;
+    border: 2px solid #00ff99;
+    box-shadow: 0 0 15px #00ff99;
 }
 
-.copy-btn:active {
-    transform: scale(0.97);
+/* ========== CONTROLS ========== */
+#controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 30px;
+    justify-content: center;
+    width: 100%;
 }
 
-/* Prediction Value */
-.prediction-value {
-    font-size: 1.3rem;
+.predict-btn {
+    position: fixed;
+    bottom: 100px;
+    border: 2px solid #00ff99;
+    border-radius: 10px;
+    padding: 40px 20px;
+    font-size: 2.5rem;
+    color: #00ff99;
+    cursor: pointer;
+    transition: all 0.3s ease;
     font-weight: bold;
-    color: #39ff14;
-    text-shadow: 0 0 12px #39ff14;
+    background-color:#00ff995c;
 }
 
-/* Neon Pulse Animation */
-@keyframes neonPulse {
-    from {
-        box-shadow: 0 0 12px #00ffcc, inset 0 0 10px rgba(0, 255, 204, 0.2);
-    }
-    to {
-        box-shadow: 0 0 24px #00ffaa, inset 0 0 15px rgba(0, 255, 204, 0.3);
-    }
+.predict-btn:hover {
+    background: #00ff99;
+    color: #0d1117;
+    box-shadow: 0 0 18px #00ff99;
 }
 
-/* Table Container */
+#result {
+    flex-basis: 100%;
+    margin-top: 15px;
+    text-align: center;
+    font-size: 2rem;
+    color: #00ffaa;
+    text-shadow: 0 0 8px #00ff99;
+}
+
+/* ========== PREDICTION BOX ========== */
+#prediction-box-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.prediction-container {
+    background: rgba(10, 15, 20, 0.95);
+    border: 2px solid #00ff99;
+    border-radius: 14px;
+    padding: 40px;
+    margin-bottom: 25px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 255, 153, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+#prediction-box .result-line {
+    margin: 10px 0;
+    font-size: 2.5rem;
+}
+
+.copy-btn-container {
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.copy-btn {
+    background-color: #0b0f14;
+    width: 250px;
+    height: 60px;
+    border: 2px solid #00ff99;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 2rem;
+    overflow: hidden;
+    transition-duration: 700ms;
+    color: #00ff99; /* Initial text color */
+}
+
+.copy-btn span:first-child {
+    color: #00ff99;
+    position: absolute;
+    transform: translate(-50%, -50%);
+}
+
+.copy-btn span:last-child {
+    position: absolute;
+    color: #00ff99;
+    opacity: 0;
+    transform: translateY(100%) translateX(-50%);
+    height: 14px;
+    line-height: 13px;
+}
+
+.copy-btn:focus {
+    background-color: #00ff99;
+    color: #0d1117; /* Text color on focus */
+   width: 250px;
+    height: 60px;
+    transition-delay: 100ms;
+    transition-duration: 500ms;
+}
+
+.copy-btn:focus span:first-child {
+    color: #0d1117; /* Text color when fading out */
+    transform: translateX(-50%) translateY(-150%);
+    opacity: 0;
+    transition-duration: 500ms;
+}
+
+.copy-btn:focus span:last-child {
+    color: #0d1117; /* "Copied" text color on focus */
+    transform: translateX(-50%) translateY(-50%);
+    opacity: 1;
+    transition-delay: 300ms;
+    transition-duration: 500ms;
+}
+
+.copy-btn:focus:end {
+    background-color: #00ff99;
+   width: 250px;
+    height: 60px;
+    transition-duration: 900ms;
+}
+/* ========== TABLE ========== */
 .table-container {
     width: 100%;
-    max-width: 600px;
-    margin: 30px auto 0 auto;
-    overflow-x: auto; /* Ensures horizontal scrolling for table on small screens */
+    overflow-x: auto;
+    margin-top: 20px;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    color: #00ffaa;
-    white-space: nowrap; /* Prevents text from wrapping in table cells */
+    min-width: 350px;
+    font-size: 1rem;
 }
 
-table th,
-table td {
-    border: 1px solid #00ffaa;
-    padding: 8px; /* Reduced padding for smaller screens */
+thead {
+    background: #0b0f14;
+    color: #00ff99;
+}
+
+thead th {
+    padding: 12px;
+    font-size: 2rem;
+    border-bottom: 2px solid #00ff99;
+}
+
+tbody td {
+    padding: 12px;
     text-align: center;
+    border-bottom: 1px solid #003322;
+    font-size: 4rem;
+    color: #e5ffe5;
 }
 
-table th {
-    background: #111;
-    text-shadow: 0 0 6px #00ffcc;
-}
-
-/* Glowing Red and Green Text */
-.red {
-    color: #ff0000;
-    text-shadow: 0 0 2px #ff4d4d, 0 0 5px #ff0000;
+tbody td:first-child {
     font-weight: bold;
+    color: #00ffaa;
+}
+
+/* Updated color classes */
+.red {
+    color: red !important;
 }
 
 .green {
-    color: #22ff00;
-    text-shadow: 0 0 2px #39ff14, 0 0 5px #00ff00;
-    font-weight: bold;
+    color: green !important;
 }
 
-/* --- Media Query for Larger Screens (e.g., tablets and desktops) --- */
-@media (min-width: 769px) {
-    /* Change flex direction to a row for a horizontal layout */
-    #input-group,
-    #controls {
-        flex-direction: row;
-        justify-content: center; /* Centers items horizontally */
-    }
+.purple {
+    color: purple !important;
+}
 
-    #input-group input {
-        width: auto;
-        flex-grow: 1; /* Allows inputs to grow and fill space */
-    }
+/* New class for a specific element */
+td.green-text {
+    color: green !important;
+}
 
-    button.add-btn,
-    button.predict-btn {
-        width: auto; /* Removes full-width constraint */
-    }
+td.red-text {
+    color: red !important;
+}
 
-    #input-group input {
-        margin-right: 8px; /* Re-adds the original margin */
-    }
-
-    .copy-btn,
-    #prediction-box {
-        width: auto; /* Removes the width constraint */
-        min-width: 220px; /* Re-applies min-width */
-    }
+td.purple-text {
+    color: purple !important;
 }
