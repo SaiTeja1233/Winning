@@ -248,7 +248,7 @@ function copyPrediction() {
     const predictionValue = predictedValueEl.textContent;
 
     const formattedText = `╭⚬──────────────⚬╮
-│ ⭐⭐ 1 MinWinGo ⭐⭐
+│ ....⭐ 1 MinWinGo ⭐....
 │⚬───────────────⚬
 │🎯WINGO : 1MinWinGo
 │⏳PERIOD : ${period}
